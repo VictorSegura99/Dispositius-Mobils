@@ -1,24 +1,21 @@
-class Path{
-String steph;
+class AppAssetsPath{
 String blackbox;
 String whitebox;
 String logo;
-String menu;
 
-Path(this.steph,this.blackbox,this.whitebox, this.logo, this.menu);
+AppAssetsPath(this.blackbox,this.whitebox, this.logo);
 
 }
 
-final path=Path(  
-  'assets/images/steph.jpg',
+final path=AppAssetsPath(
   'assets/images/blackbox.jpg',
   'assets/images/whitebox.jpg',
   'assets/images/logo.png',
-  'assets/images/menu.jpg'
 );
 
 
-class Stats{
+class PlayerDataStats{
+  String background;
   String number;
   String name;
   String team;
@@ -27,10 +24,11 @@ class Stats{
   String steals;
   String last_match;
 
-  Stats(this.number,this.name,this.team,this.points,this.assists,this.steals, this.last_match);
+  PlayerDataStats(this.background, this.number,this.name,this.team,this.points,this.assists,this.steals, this.last_match);
 }
 
-final stats=Stats(
+final stats=PlayerDataStats(
+  'assets/images/steph.jpg',
   '#30',
   'STEPHEN CURRY',
   'PG | Golden State Warriors',

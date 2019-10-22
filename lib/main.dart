@@ -8,15 +8,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: new PlayerPage(),
+      home: new PlayerPage(playerstats: stats,),
     );
   }
 }
 
 class PlayerPage extends StatelessWidget {
+
+final PlayerDataStats playerstats;
+
   const PlayerPage({
     Key key,
-    Stats stats,
+    @required this.playerstats,
   }) : super(key: key);
 
   @override
@@ -30,14 +33,14 @@ class PlayerPage extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(path.steph),
+                  image: AssetImage(stats.background),
                   fit: BoxFit.fitHeight,
                 ),
               ),
               child: Column(
                 children: <Widget>[
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.only(top: 25, left: 25),
@@ -53,7 +56,7 @@ class PlayerPage extends StatelessWidget {
                       ),
                       Spacer(),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(25, 25, 25, 0),
+                        padding: EdgeInsets.only(top: 25,right: 25 ),
                         child: Icon(Icons.menu, color: Colors.white, size: 30),
                       ),
                     ],
