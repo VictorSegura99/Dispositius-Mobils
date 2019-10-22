@@ -39,13 +39,13 @@ class MyApp extends StatelessWidget {
                         child: Column(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(top:15),
+                              padding: EdgeInsets.only(top:10),
                               child:Row(
                                 children: <Widget>[
                                   Container(
-                                    margin: EdgeInsets.only(left:18,bottom: 20),
+                                    margin: EdgeInsets.only(left: 12),
                                     height: 80,
-                                    width: 300,
+                                    width: 310,
                                     decoration: BoxDecoration(
                                      image:DecorationImage(                  
                                         image: AssetImage('assets/images/blackbox.jpg'),
@@ -92,53 +92,88 @@ class MyApp extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left:15, bottom: 20),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Text("2",style: TextStyle(color: Colors.black,fontSize: 20),),
-                                      Text("abc",style: TextStyle(color: Colors.black,fontSize: 20),),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Container(
-                                        width: 4.0,
-                                        height: 80.0,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                        )
+                              padding: const EdgeInsets.only(bottom: 0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Text("POINTS",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 14,),),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text("46",style: TextStyle(color: Colors.black,fontSize: 36),),
+                                      ],
                                     ),
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Text("2",style: TextStyle(color: Colors.black,fontSize: 20),),
-                                      Text("abc",style: TextStyle(color: Colors.black,fontSize: 20),),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: Container(
-                                        width: 4.0,
-                                        height: 80.0,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                        )
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20.0,bottom: 20.0),
+                                      child: Container(
+                                          width: 2.0,
+                                          height: 80.0,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                          )
+                                      ),
                                     ),
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Text("2",style: TextStyle(color: Colors.black,fontSize: 20),),
-                                      Text("abc",style: TextStyle(color: Colors.black,fontSize: 20),),
-                                    ],
-                                  ),
-                                ],
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                         Text("ASSITS",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 14,),),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                         Text("12",style: TextStyle(color: Colors.black,fontSize: 36),),
+                                      ],
+                                    ),
+                                    Padding(
+                                     padding: const EdgeInsets.only(top: 20.0,bottom: 20.0),
+                                      child: Container(
+                                          width: 2.0,
+                                          height: 80.0,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                          )
+                                      ),
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                         Text("STEALS",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 14,),),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                         Text("4",style: TextStyle(color: Colors.black,fontSize: 36),),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            Expanded(
+                              child: Container(
+                                    margin: EdgeInsets.only(bottom: 15),
+                                    height: 30,
+                                    width: 310,
+                                    child: Row(
+                                      children: <Widget>[
+                                        Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(left: 20),
+                                            child: Text(
+                                            "Last Saturday vs. Rockets", style: TextStyle(fontSize: 24,color: Colors.white),
+                                        ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    decoration: BoxDecoration(
+                                     image:DecorationImage(                  
+                                        image: AssetImage('assets/images/blackbox.jpg'),
+                                        fit: BoxFit.fitWidth,
+                                     ),
+                                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                    ),
                               ),
                             )
                           ],
