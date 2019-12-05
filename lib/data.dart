@@ -4,7 +4,6 @@ String whitebox;
 String logo;
 
 AppAssetsPath(this.blackbox,this.whitebox, this.logo);
-
 }
 
 final path=AppAssetsPath(
@@ -21,10 +20,9 @@ class PlayerDataStats{
   String team;
   String points;
   String assists;
-  String steals;
-  String last_match;
+  String rebounds;
 
-  PlayerDataStats(this.background, this.number,this.name,this.team,this.points,this.assists,this.steals, this.last_match);
+  PlayerDataStats(this.background, this.number,this.name,this.team,this.points,this.assists,this.rebounds);
 }
 
 final stats=PlayerDataStats(
@@ -32,8 +30,7 @@ final stats=PlayerDataStats(
   '#30',
   'STEPHEN CURRY',
   'PG | Golden State Warriors',
-  '51',
-  '12',
-  '4',
-  'Last Saturday vs. Rockets',
+  '31',
+  '7.2',
+  '2.3',
 );
