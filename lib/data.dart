@@ -23,18 +23,20 @@ class PlayerDataStats{
   String number;
   String name;
   String team;
-  int points;
+  String logo;
+  double points;
   double assists;
   double rebounds;
-  IconData icon;
+  IconData icon=Icons.star_border;
 
-  PlayerDataStats(this.background, this.number,this.name,this.team,this.points,this.assists,this.rebounds, this.icon);
+  PlayerDataStats(this.background, this.number,this.name,this.team, this.logo, this.points,this.assists,this.rebounds, this.icon);
 
     PlayerDataStats.fromJson(var json)
     : name=json['Name'],
     background=json['Background'],
     number=json['Number'],
     team=json['Team'],
+    logo=json['Logo'],
     points=json['Points'],
     assists=json['Assists'],
     rebounds=json['Rebounds'];

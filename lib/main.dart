@@ -38,7 +38,7 @@ class _FavoritePlayersState extends State<FavoritePlayers> {
     for (var element in json['Players Data']) {
       players_data.add(PlayerDataStats.fromJson(element));
     }
-    all_players=players_data;
+    all_players = players_data;
     //super.setState(()=>_players_data = players_data);
   }
 
@@ -166,19 +166,34 @@ class _PlayerToCheckState extends State<PlayerToCheck> {
         itemBuilder: (context, index) {
           final PlayerDataStats data = all_players[index];
           return ListTile(
+            leading: Padding(
+              padding: EdgeInsets.all(4),
+              child: Image(
+              fit: BoxFit.fitHeight,
+              image: AssetImage(
+                data.logo,
+              ),
+              ),
+            ),
             title: Text(data.name),
             onTap: () {
-              setState(() {
-                if (data.icon == Icons.star_border) {
-                  data.icon = Icons.star;
-                } else {
-                  data.icon = Icons.star_border;
-                }
-              });
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => PlayerPage(
+                  playerstats: data,
+                ),
+              ));
             },
-            trailing: Icon(
-              data.icon,
-              size: 25,
+            trailing: IconButton(
+              icon: Icon(data.icon),
+              onPressed: () {
+                setState(() {
+                  if (data.icon == Icons.star_border) {
+                    data.icon = Icons.star;
+                  } else {
+                    data.icon = Icons.star_border;
+                  }
+                });
+              },
             ),
           );
         },
@@ -228,8 +243,7 @@ class PlayerPage extends StatelessWidget {
                           icon: Icon(Icons.arrow_back_ios),
                           color: Colors.white,
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => FavoritePlayers()));
+                            Navigator.of(context).pop();
                           },
                         ),
                       ),

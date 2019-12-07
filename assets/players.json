@@ -3,11 +3,23 @@
         {
             "Name": "STEPHEN CURRY",
             "Background": "assets/images/steph.jpg",
+            "Logo": "assets/images/warriors.png",
             "Number": "#30",
             "Team": "GOLDEN STATE WARRIORS",
-            "Points": 31,
+            "Points": 31.3,
             "Assists": 7.2,
             "Rebounds": 2.3
+        },
+        {
+            "Name": "JAMES HARDEN",
+            "Background": "assets/images/harden.jpg",
+            "Number": "#13",
+            "Logo": "assets/images/rockets.png",
+            "Team": "HOUSTON ROCKETS",
+            "Points": 38.7,
+            "Assists": 7.5,
+            "Rebounds": 6.1
         }
+        
     ]
 }
