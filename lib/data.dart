@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 class AppAssetsPath{
 String blackbox;
 String whitebox;
@@ -18,19 +23,19 @@ class PlayerDataStats{
   String number;
   String name;
   String team;
-  String points;
-  String assists;
-  String rebounds;
+  int points;
+  double assists;
+  double rebounds;
+  IconData icon;
 
-  PlayerDataStats(this.background, this.number,this.name,this.team,this.points,this.assists,this.rebounds);
+  PlayerDataStats(this.background, this.number,this.name,this.team,this.points,this.assists,this.rebounds, this.icon);
+
+    PlayerDataStats.fromJson(var json)
+    : name=json['Name'],
+    background=json['Background'],
+    number=json['Number'],
+    team=json['Team'],
+    points=json['Points'],
+    assists=json['Assists'],
+    rebounds=json['Rebounds'];
 }
-
-final stats=PlayerDataStats(
-  'assets/images/steph.jpg',
-  '#30',
-  'STEPHEN CURRY',
-  'PG | Golden State Warriors',
-  '31',
-  '7.2',
-  '2.3',
-);

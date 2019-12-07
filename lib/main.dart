@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'data.dart';
 
 void main() => runApp(Assigment2App());
@@ -18,10 +21,25 @@ class FavoritePlayers extends StatefulWidget {
 }
 
 class _FavoritePlayersState extends State<FavoritePlayers> {
+  List<PlayerDataStats> all_players;
   List<PlayerDataStats> favorite_players;
   @override
   void initState() {
+    favorite_players = new List<PlayerDataStats>();
+    all_players = new List<PlayerDataStats>();
+    _readPlayers();
     super.initState();
+  }
+
+  _readPlayers() async {
+    String data = await rootBundle.loadString('assets/players.json');
+    var json = jsonDecode(data);
+    List<PlayerDataStats> players_data = new List<PlayerDataStats>();
+    for (var element in json['Players Data']) {
+      players_data.add(PlayerDataStats.fromJson(element));
+    }
+    all_players=players_data;
+    //super.setState(()=>_players_data = players_data);
   }
 
   @override
@@ -43,7 +61,7 @@ class _FavoritePlayersState extends State<FavoritePlayers> {
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => PlayerPage(
-                        playerstats: stats,
+                        playerstats: players,
                       ),
                     ));
                   },
@@ -77,11 +95,11 @@ class _FavoritePlayersState extends State<FavoritePlayers> {
           Navigator.of(context)
               .push(
             MaterialPageRoute(
-              builder: (context) => PlayerToCheck(),
+              builder: (context) => PlayerToCheck(all_players),
             ),
-          ).then((new_favorites) {
+          )
+              .then((new_favorites) {
             if (new_favorites != null) {
-              // es l'únic que no he aconseguit que funcioni, no se perquè em dona un error aquí
               List<PlayerDataStats> players_list = new_favorites;
               setState(() {
                 for (int i = 0; i < players_list.length; ++i) {
@@ -97,19 +115,23 @@ class _FavoritePlayersState extends State<FavoritePlayers> {
 }
 
 class PlayerToCheck extends StatefulWidget {
+  final List<PlayerDataStats> all_players;
+
+  PlayerToCheck(this.all_players);
+
   @override
-  _PlayerToCheckState createState() => _PlayerToCheckState();
+  _PlayerToCheckState createState() => _PlayerToCheckState(all_players);
 }
 
 class _PlayerToCheckState extends State<PlayerToCheck> {
-  Map players=new Map(); // guardo el nom i assigno el icono de la checkbox sense clicar per poder canviar el state despres
-  List<PlayerDataStats> all_players=new List<PlayerDataStats>();
+  List<PlayerDataStats> all_players;
+
+  _PlayerToCheckState(List<PlayerDataStats> _all_players) {
+    this.all_players = _all_players;
+  }
+
   @override
   void initState() {
-
-    for (int i = 0; i < all_players.length; ++i) {
-      players[all_players[i].name] = Icons.star_border;
-    }
     super.initState();
   }
 
@@ -128,7 +150,7 @@ class _PlayerToCheckState extends State<PlayerToCheck> {
             onPressed: () {
               List<PlayerDataStats> to_add = new List<PlayerDataStats>();
               for (int i = 0; i > all_players.length; ++i) {
-                if (players[all_players[i].name] == Icons.check_box) {
+                if (all_players[i].icon == Icons.star) {
                   to_add.add(all_players[i]);
                 }
               }
@@ -147,15 +169,15 @@ class _PlayerToCheckState extends State<PlayerToCheck> {
             title: Text(data.name),
             onTap: () {
               setState(() {
-                if (players[data.name] == Icons.star_border) {
-                  players[data.name] = Icons.star;
+                if (data.icon == Icons.star_border) {
+                  data.icon = Icons.star;
                 } else {
-                  players[data.name] = Icons.star_border;
+                  data.icon = Icons.star_border;
                 }
               });
             },
             trailing: Icon(
-              players[data.name],
+              data.icon,
               size: 25,
             ),
           );
@@ -167,17 +189,6 @@ class _PlayerToCheckState extends State<PlayerToCheck> {
             thickness: 1,
           );
         },
-      ),
-    );
-  }
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: new PlayerPage(
-        playerstats: stats,
       ),
     );
   }
@@ -202,7 +213,7 @@ class PlayerPage extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(stats.background),
+                  image: AssetImage(playerstats.background),
                   fit: BoxFit.fitHeight,
                 ),
               ),
@@ -218,13 +229,13 @@ class PlayerPage extends StatelessWidget {
                           color: Colors.white,
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => FavoritePlayers()));
+                                builder: (context) => FavoritePlayers()));
                           },
                         ),
                       ),
                       Spacer(),
                       Padding(
-                        padding: EdgeInsets.only(top: 25,right: 25),
+                        padding: EdgeInsets.only(top: 25, right: 25),
                         child: Container(
                           height: 50,
                           width: 100,
@@ -279,7 +290,7 @@ class PlayerPage extends StatelessWidget {
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
                                           Text(
-                                            stats.number,
+                                            playerstats.number,
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 30),
@@ -302,13 +313,13 @@ class PlayerPage extends StatelessWidget {
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
                                           Text(
-                                            stats.name,
+                                            playerstats.name,
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 24),
                                           ),
                                           Text(
-                                            stats.team,
+                                            playerstats.team,
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16),
@@ -342,7 +353,7 @@ class PlayerPage extends StatelessWidget {
                                       height: 10,
                                     ),
                                     Text(
-                                      stats.points,
+                                      playerstats.points.toString(),
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 36),
                                     ),
@@ -373,7 +384,7 @@ class PlayerPage extends StatelessWidget {
                                       height: 10,
                                     ),
                                     Text(
-                                      stats.assists,
+                                      playerstats.assists.toString(),
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 36),
                                     ),
@@ -404,7 +415,7 @@ class PlayerPage extends StatelessWidget {
                                       height: 10,
                                     ),
                                     Text(
-                                      stats.rebounds,
+                                      playerstats.rebounds.toString(),
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 36),
                                     ),

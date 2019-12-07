@@ -1,0 +1,13 @@
+{
+    "Players Data": [
+        {
+            "Name": "STEPHEN CURRY",
+            "Background": "assets/images/steph.jpg",
+            "Number": "#30",
+            "Team": "GOLDEN STATE WARRIORS",
+            "Points": 31,
+            "Assists": 7.2,
+            "Rebounds": 2.3
+        }
+    ]
+}
