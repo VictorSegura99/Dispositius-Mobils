@@ -17,7 +17,7 @@ class PlayerStatsApp extends StatelessWidget {
 }
 
 class FavoritePlayers extends StatefulWidget {
-    final List<PlayerDataStats> players_to_add;
+  final List<PlayerDataStats> players_to_add;
 
   FavoritePlayers(this.players_to_add);
 
@@ -70,7 +70,8 @@ class _FavoritePlayersState extends State<FavoritePlayers> {
                   leading: Padding(
                     padding: EdgeInsets.all(4),
                     child: Image(
-                      fit: BoxFit.fitHeight,
+                      width: 40,
+                      fit: BoxFit.fitWidth,
                       image: AssetImage(
                         data.logo,
                       ),
@@ -85,11 +86,11 @@ class _FavoritePlayersState extends State<FavoritePlayers> {
                     ));
                   },
                   trailing: IconButton(
-                    icon: Icon(Icons.star),
-                    iconSize: 25,
+                    icon: Icon(data.icon),
                     onPressed: () {
                       setState(() {
-                        Icon(Icons.star_border);
+                        favorite_players.remove(data);
+                        data.icon=Icons.star_border;
                       });
                     },
                   ),
@@ -110,11 +111,17 @@ class _FavoritePlayersState extends State<FavoritePlayers> {
         child: Icon(Icons.add),
         backgroundColor: Colors.black87,
         onPressed: () {
-          Navigator.of(context).push(
+          Navigator.of(context)
+              .push(
             MaterialPageRoute(
-              builder: (context) => PlayerToCheck(all_players),
+              builder: (context) => PlayerToCheck(all_players,favorite_players),
             ),
-          );
+          )
+              .then((_favorite_players) {
+            if (_favorite_players != null) {
+              this.favorite_players = _favorite_players;
+            }
+          });
         },
       ),
     );
@@ -122,25 +129,26 @@ class _FavoritePlayersState extends State<FavoritePlayers> {
 }
 
 class PlayerToCheck extends StatefulWidget {
-  final List<PlayerDataStats> all_players;
+  final List<PlayerDataStats> _all_players;
+  final List<PlayerDataStats> _favorite_players;
 
-  PlayerToCheck(this.all_players);
+  PlayerToCheck(this._all_players, this._favorite_players);
 
   @override
-  _PlayerToCheckState createState() => _PlayerToCheckState(all_players);
+  _PlayerToCheckState createState() => _PlayerToCheckState(_all_players,_favorite_players);
 }
 
 class _PlayerToCheckState extends State<PlayerToCheck> {
   List<PlayerDataStats> all_players;
   List<PlayerDataStats> to_add;
 
-  _PlayerToCheckState(List<PlayerDataStats> _all_players) {
+  _PlayerToCheckState(List<PlayerDataStats> _all_players, _favorite_players) {
     this.all_players = _all_players;
+    this.to_add=_favorite_players;
   }
 
   @override
   void initState() {
-    to_add = new List<PlayerDataStats>();
     super.initState();
   }
 
@@ -150,21 +158,6 @@ class _PlayerToCheckState extends State<PlayerToCheck> {
       appBar: AppBar(
         title: Text("Check Players"),
         backgroundColor: Colors.black87,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.check,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop(
-                  MaterialPageRoute(
-                    builder: (context) => FavoritePlayers(to_add),
-                  ),
-                );
-            },
-          ),
-        ],
       ),
       body: ListView.separated(
         itemCount: all_players.length,
