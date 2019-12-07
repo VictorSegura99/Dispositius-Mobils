@@ -1,28 +1,38 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'data.dart';
 
-void main() => runApp(Assigment2App());
+void main() => runApp(PlayerStatsApp());
 
-class Assigment2App extends StatelessWidget {
+class PlayerStatsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: FavoritePlayers(),
+      home: FavoritePlayers(null),
     );
   }
 }
 
 class FavoritePlayers extends StatefulWidget {
+    final List<PlayerDataStats> players_to_add;
+
+  FavoritePlayers(this.players_to_add);
+
   @override
-  _FavoritePlayersState createState() => _FavoritePlayersState();
+  _FavoritePlayersState createState() => _FavoritePlayersState(players_to_add);
 }
 
 class _FavoritePlayersState extends State<FavoritePlayers> {
   List<PlayerDataStats> all_players;
   List<PlayerDataStats> favorite_players;
+
+  _FavoritePlayersState(List<PlayerDataStats> _favorite_players) {
+    this.favorite_players = _favorite_players;
+  }
+
   @override
   void initState() {
     favorite_players = new List<PlayerDataStats>();
@@ -38,8 +48,7 @@ class _FavoritePlayersState extends State<FavoritePlayers> {
     for (var element in json['Players Data']) {
       players_data.add(PlayerDataStats.fromJson(element));
     }
-    all_players = players_data;
-    //super.setState(()=>_players_data = players_data);
+    super.setState(() => all_players = players_data);
   }
 
   @override
@@ -56,12 +65,22 @@ class _FavoritePlayersState extends State<FavoritePlayers> {
             child: ListView.separated(
               itemCount: favorite_players.length,
               itemBuilder: (context, index) {
-                final PlayerDataStats players = favorite_players[index];
+                final PlayerDataStats data = favorite_players[index];
                 return ListTile(
+                  leading: Padding(
+                    padding: EdgeInsets.all(4),
+                    child: Image(
+                      fit: BoxFit.fitHeight,
+                      image: AssetImage(
+                        data.logo,
+                      ),
+                    ),
+                  ),
+                  title: Text(data.name),
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => PlayerPage(
-                        playerstats: players,
+                        playerstats: data,
                       ),
                     ));
                   },
@@ -74,7 +93,6 @@ class _FavoritePlayersState extends State<FavoritePlayers> {
                       });
                     },
                   ),
-                  title: Text(players.name),
                 );
               },
               separatorBuilder: (context, index) {
@@ -92,22 +110,11 @@ class _FavoritePlayersState extends State<FavoritePlayers> {
         child: Icon(Icons.add),
         backgroundColor: Colors.black87,
         onPressed: () {
-          Navigator.of(context)
-              .push(
+          Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => PlayerToCheck(all_players),
             ),
-          )
-              .then((new_favorites) {
-            if (new_favorites != null) {
-              List<PlayerDataStats> players_list = new_favorites;
-              setState(() {
-                for (int i = 0; i < players_list.length; ++i) {
-                  favorite_players.add(players_list[i]);
-                }
-              });
-            }
-          });
+          );
         },
       ),
     );
@@ -125,6 +132,7 @@ class PlayerToCheck extends StatefulWidget {
 
 class _PlayerToCheckState extends State<PlayerToCheck> {
   List<PlayerDataStats> all_players;
+  List<PlayerDataStats> to_add;
 
   _PlayerToCheckState(List<PlayerDataStats> _all_players) {
     this.all_players = _all_players;
@@ -132,6 +140,7 @@ class _PlayerToCheckState extends State<PlayerToCheck> {
 
   @override
   void initState() {
+    to_add = new List<PlayerDataStats>();
     super.initState();
   }
 
@@ -148,15 +157,11 @@ class _PlayerToCheckState extends State<PlayerToCheck> {
               color: Colors.white,
             ),
             onPressed: () {
-              List<PlayerDataStats> to_add = new List<PlayerDataStats>();
-              for (int i = 0; i > all_players.length; ++i) {
-                if (all_players[i].icon == Icons.star) {
-                  to_add.add(all_players[i]);
-                }
-              }
-              Navigator.of(context).pop({
-                to_add,
-              });
+              Navigator.of(context).pop(
+                  MaterialPageRoute(
+                    builder: (context) => FavoritePlayers(to_add),
+                  ),
+                );
             },
           ),
         ],
@@ -169,10 +174,11 @@ class _PlayerToCheckState extends State<PlayerToCheck> {
             leading: Padding(
               padding: EdgeInsets.all(4),
               child: Image(
-              fit: BoxFit.fitHeight,
-              image: AssetImage(
-                data.logo,
-              ),
+                width: 40,
+                fit: BoxFit.fitWidth,
+                image: AssetImage(
+                  data.logo,
+                ),
               ),
             ),
             title: Text(data.name),
@@ -189,8 +195,10 @@ class _PlayerToCheckState extends State<PlayerToCheck> {
                 setState(() {
                   if (data.icon == Icons.star_border) {
                     data.icon = Icons.star;
+                    to_add.add(data);
                   } else {
                     data.icon = Icons.star_border;
+                    to_add.remove(data);
                   }
                 });
               },
@@ -320,25 +328,26 @@ class PlayerPage extends StatelessWidget {
                                           decoration: BoxDecoration(
                                             color: Colors.white,
                                           )),
-                                      SizedBox(
-                                        width: 10.0,
-                                      ),
-                                      Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Text(
-                                            playerstats.name,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 24),
+                                      Expanded(
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              Text(
+                                                playerstats.name,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 24),
+                                              ),
+                                              Text(
+                                                playerstats.team,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16),
+                                              )
+                                            ],
                                           ),
-                                          Text(
-                                            playerstats.team,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16),
-                                          )
-                                        ],
+                                        ),
                                       ),
                                     ],
                                   ),

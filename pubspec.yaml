@@ -44,6 +44,14 @@ flutter:
   assets:
   - assets/images/steph.jpg
   - assets/images/harden.jpg
+  - assets/images/anteto.png
+  - assets/images/bucks.png
+  - assets/images/lakers.png
+  - assets/images/lebron.png
+  - assets/images/kawhi.png
+  - assets/images/clippers.png
+  - assets/images/mavs.png
+  - assets/images/luka.png
   - assets/images/rockets.png
   - assets/images/warriors.png
   - assets/images/blackbox.jpg

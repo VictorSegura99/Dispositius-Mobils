@@ -19,7 +19,46 @@
             "Points": 38.7,
             "Assists": 7.5,
             "Rebounds": 6.1
+        },
+        {
+            "Name": "ANTETOKOUNMPO",
+            "Background": "assets/images/anteto.png",
+            "Number": "#34",
+            "Logo": "assets/images/bucks.png",
+            "Team": "MILWAUKEE BUCKS",
+            "Points": 30.8,
+            "Assists": 5.4,
+            "Rebounds": 13.1
+        },
+        {
+            "Name": "LUKA DONCIC",
+            "Background": "assets/images/luka.png",
+            "Number": "#77",
+            "Logo": "assets/images/mavs.png",
+            "Team": "DALLAS MAVERICKS",
+            "Points": 30.3,
+            "Assists": 9.2,
+            "Rebounds": 10.1
+        },
+        {
+            "Name": "LEBRON JAMES",
+            "Background": "assets/images/lebron.png",
+            "Number": "#23",
+            "Logo": "assets/images/lakers.png",
+            "Team": "LA LAKERS",
+            "Points": 25.6,
+            "Assists": 7.0,
+            "Rebounds": 10.7
+        },
+        {
+            "Name": "KAWHI LEONARD",
+            "Background": "assets/images/kawhi.png",
+            "Number": "#23",
+            "Logo": "assets/images/clippers.png",
+            "Team": "LA CLIPPERS",
+            "Points": 24.5,
+            "Assists": 5.2,
+            "Rebounds": 7.7
         }
-        
     ]
 }
